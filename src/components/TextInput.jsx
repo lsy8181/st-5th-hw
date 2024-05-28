@@ -1,31 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import TextContext from "../contexts/TextContext";
 
-function TextInput({ onAddText }) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
+const TextInput = () => {
+  const [input, setInput] = useState("");
+  const { onAddText } = useContext(TextContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputValue.trim()) {
-      onAddText(inputValue);
-      setInputValue("");
-    }
+    onAddText(input);
+    setInput("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={inputValue}
-        onChange={handleChange}
-        placeholder="Enter text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
       />
-      <button type="submit">Add</button>
+      <button type="submit">Add Text</button>
     </form>
   );
-}
+};
 
 export default TextInput;
